@@ -1,0 +1,72 @@
+
+1 - Comentários (valor: 2.0 -> 1.0 cada arquivo)
+      arquivos:
+              bin:     ok, monta e roda no simulador corretamente
+              zerinho: ok, monta e roda no simulador corretamente
+      
+    total: 2.0 
+
+2 - Ligação (valor: 2.0 -> 1.0 cada arquivo)
+      arquivos:
+           fat_mod_A_1: não gera nada como arquivo objeto no programa original, dando até falha de segmentação.     
+           fat_mod_B_1: não gera nada como arquivo objeto no programa original dando até falha de segmentação.
+             No entanto, com um pouco de boa vontade, alterei a linhas 264 para:
+                char file1[50];
+                   ao invés de:
+                char *file1 = (char*) malloc(sizeof(char)*strlen(argv[1]) + 1);
+             Desse modo, foi possível obter um resultado:
+           -> resultado: 12 13 10 13 2 14 8 10 5  0  0 13 14 0  1 11 10 3  0 11  0 13 10 5 0 4 
+           -> gabarito:  12 13 10 13 2 14 8 10 5 15 13 13 14 00 1 11 25 3 13 11 13 10 25 5 4 00
+             (-0.5)
+           --------------------------
+           prog1_mod_A e prog1_mod_B: 
+             -> Tabelas de definições estão corretas
+             -> Tabelas de uso indicam o endereço incorretamente, sempre adicionando um endereço a mais, como se a contagem fosse iniciada no endereço 1 e não no 0.
+             -> Além disso, faltam os outros 2 usos de Y no prog1_mod_A
+             -> código ligado:
+              12  0 10 11 1  0 11  0 20  0 12 5 13  8 13  0 11  8 5 0 10 0 0 
+                gabarito:
+              12 20 10 11 1 20 11 22  7 12 14 5 13 20 13 11 13 22 5 10 0 0 0
+            Assim, o código gerado não roda no simulador, pois faltou resolver as referências cruzadas e considerar o fator de correção (que é 12 no caso, o endereço de início do módulo B)
+        (-0.5)
+
+    total: 1.0
+
+3 - Detecção de Erros (valor: 6.0 -> 0.2 cada)
+    erro-begin-SINTATICO:  não indica erro (-0.2)
+    erro-decl-ausente-SEMANTICO_1 (2 linhas de erro): OK
+    erro-decl-repetida-SEMANTICO: não indica erro (-0.2)          
+    erro-desvio1-SEMANTICO:     não indica erro (-0.2)
+    erro-desvio2-SEMANTICO:     não indica erro (-0.2)
+    erro-diretiva1-SINTATICO:   não indica erro (-0.2)
+    erro-diretiva2-SEMANTICO:   não indica erro (-0.2)
+    erro-diretiva3-SINTATICO:   não indica erro (-0.2)
+    erro-divisao-SINTATICO:     não indica erro (-0.2)
+    erro-end-ausente-SEMANTICO: não indica erro (-0.2)
+    erro-gramatica-SEMANTICO:   não indica erro (-0.2)
+    erro-instrucao-SINTATICO (ou Lexico): não indica erro (-0.2)
+    erro-LEXICO1: não indica erro (-0.2)
+    erro-LEXICO2: não indica erro (-0.2)
+    erro-LEXICO3: OK, apesar de não identificar '*' como inválido na linha 8 (-0.1), para a interpretação feita, o número da linha está correto. 
+    erro-numero-SINTATICO:       não indica erro (-0.2)
+    erro-numero-SINTATICO2:      não indica erro (-0.2)
+    erro-operandos1-SINTATICO:   não indica erro (-0.2)
+    erro-operandos2-SINTATICO:   não indica erro (-0.2)
+    erro-output-SINTATICO: indica erro semântico e não sintático como deveria, pois a construção da intrução output está errada (-0.1)
+    erro-rotulo-ausente-SEMANTICO:  OK
+    erro-rotulo-dobrado-SINTATICO:  OK. Indica que o rótulo TESTE não existe, não identificando como rótulo dobrado, mas o tipo e a linha do erro estão corretos.
+    erro-rotulo-repetido-SEMANTICO:        não indica erro (-0.2)
+    erro-secao1-SEMANTICO (ou Sintatico):  não indica erro (-0.2)
+    erro-secao2-SINTATICO:                 não indica erro (-0.2)  
+    erro-tipo1-SEMANTICO:  não indica erro (-0.2)
+    erro-tipo2-SEMANTICO:  não indica erro (-0.2)
+    erro-vetor1-SEMANTICO: não indica erro (-0.2)
+    erro-vetor2-SEMANTICO: não indica erro (-0.2)
+    erro-vetor3-SINTATICO: não indica erro (-0.2)
+
+TOTAL: 0.8
+
+
+FINAL: 3.8
+
+
